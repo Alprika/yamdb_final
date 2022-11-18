@@ -5,34 +5,35 @@ class OwnerOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        if (request.method == 'POST'
+        if ((request.method == 'POST'
                 or request.method == 'PUT'
                 or request.method == 'PATCH'
-                or request.method == 'DELETE') and \
-                request.user.is_authenticated:
+                or request.method == 'DELETE')
+                and request.user.is_authenticated):
             return True
         return False
 
     def has_object_permission(self, request, view, obj):
         if request.method in permissions.SAFE_METHODS:
             return True
-        if request.method == 'DELETE' and \
-           request.user.is_authenticated and \
-                (request.user.is_moderator
+        if (
+            request.method == 'DELETE'
+            + request.user.is_authenticated
+                + (request.user.is_moderator
                     or request.user.is_admin
                     or request.user.is_superuser
-                    or obj.author == request.user):
+                    or obj.author == request.user)):
             return True
-        if view.basename == 'title' and \
-           request.method == 'PATCH' and \
-           request.user.is_authenticated and \
-           (request.user.is_admin or request.user.is_superuser):
+        if (view.basename == 'title'
+           + request.method == 'PATCH'
+           + request.user.is_authenticated
+           + (request.user.is_admin or request.user.is_superuser)):
             return True
-        if (view.basename == 'reviews' or view.basename == 'comments') and \
-            request.method == 'PATCH' and request.user.is_authenticated and \
-            request.user.is_moderator or \
-            request.user.is_admin or \
-                request.user.is_superuser or obj.author == request.user:
+        if ((view.basename == 'reviews' or view.basename == 'comments')
+            + request.method == 'PATCH' and request.user.is_authenticated
+            + request.user.is_moderator
+            or request.user.is_admin
+                or request.user.is_superuser or obj.author == request.user):
             return True
         return False
 

@@ -1,8 +1,8 @@
+from django.contrib.auth import get_user_model
 from django.db.models import Avg
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
-from reviews.models import Category, Comment, Genre, Review, Title
 from rest_framework.validators import UniqueValidator
+from reviews.models import Category, Comment, Genre, Review, Title
 
 User = get_user_model()
 
@@ -14,8 +14,7 @@ class CategorySerializer(serializers.ModelSerializer):
         lookup_field = 'slug'
 
     def create(self, validated_data):
-        category = Category.objects.create(**validated_data)
-        return category
+        return (Category.objects.create(**validated_data))
 
 
 class CommentsSerializer(serializers.ModelSerializer):
@@ -37,8 +36,7 @@ class GenreSerializer(serializers.ModelSerializer):
         lookup_field = 'slug'
 
     def create(self, validated_data):
-        genre = Genre.objects.create(**validated_data)
-        return genre
+        return (Genre.objects.create(**validated_data))
 
 
 class ReviewSerializer(serializers.ModelSerializer):
