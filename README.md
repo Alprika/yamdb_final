@@ -83,3 +83,42 @@ Payload:
     "text": "string",
     "score": 1
 }
+
+- Пример GET запроса для получения пользователя по username (доступно только администратору):
+
+/api/v1/users/{username}/
+{
+
+    "username": "string",
+    "email": "user@example.com",
+    "first_name": "string",
+    "last_name": "string",
+    "bio": "string",
+    "role": "user"
+
+}
+
+- Пример GET запроса для получения списка всех категорий (доступно без токена):
+
+/api/v1/categories/
+Ответ:
+
+[
+
+{
+
+    "count": 0,
+    "next": "string",
+    "previous": "string",
+    "results": 
+
+[
+
+            {
+                "name": "string",
+                "slug": "string"
+            }
+        ]
+    }
+
+]
